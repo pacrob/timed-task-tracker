@@ -14,6 +14,11 @@ def create_app():
     def health():
         return {"ok": True}
 
+    @app.get("/tasks")
+    def create_task():
+        return {"ok": True, "message": "create task endpoint"}
+    
+    # ------------------------------------------------
     # ensure SQLAlchemy sessions don't leak between requests
     @app.teardown_appcontext
     def remove_session(exc=None):
