@@ -1,0 +1,27 @@
+name: "timed-task-tracker"
+services:
+  tracker-backend:
+    hostname: tracker-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "5000:5000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /opt/tracker/backend
+
+  tracker-frontend:
+    hostname: tracker-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /opt/tracker/frontend

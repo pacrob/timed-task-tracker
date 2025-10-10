@@ -1,0 +1,22 @@
+FROM python:3.13-slim
+
+ENV HOME=/opt/tracker
+ENV FLASK_ENV=local
+ENV FLASK_DEBUG=1
+ENV LANG=en_US.UTF-8
+WORKDIR $HOME
+
+RUN apt update && apt install -y \
+    gcc \
+    libpq-dev \
+    make \
+    curl
+
+COPY pyproject.toml ./
+RUN pip install .
+
+COPY backend backend
+
+EXPOSE 5000
+
+CMD ["flask", "--app", "backend.app", "run", "--host=0.0.0.0"]
